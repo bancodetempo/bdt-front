@@ -1,17 +1,16 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <OrderForm msg="Bem-vindo(a) ao Banco de Tempo"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import OrderForm from './components/OrderForm.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    OrderForm
   }
 }
 </script>
