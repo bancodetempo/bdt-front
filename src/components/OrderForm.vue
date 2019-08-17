@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <form id="order_form">
+    <form id="order_form" @submit="makeAnOrder($event)">
 
         <label for="requester">De:</label>
         <input type="text" id="requester" name="requester" v-model="requester">
@@ -15,12 +15,14 @@
         <label for="order_price">Preço</label>
         <input type="text" id="order_price" name="order_price" v-model="order_price">
 
-        <button v-on:click="makeAnOrder($event)">Solicitar transferência</button>
+        <input type="submit" value="Solicitar transferencia"/>
     </form>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 const ajaxMixin = {
   methods: {
     callAjax (resource) {
@@ -28,6 +30,8 @@ const ajaxMixin = {
     }
   }
 }
+
+const API_URL = 'https://bdt-backend.herokuapp.com/api/'
 
 export default {
   name: 'OrderForm',
@@ -45,8 +49,9 @@ export default {
   },
   methods: {
     makeAnOrder: function (evt) {
+      let resource_url = 'https://bdt-backend.herokuapp.com/admin'
       evt.preventDefault()
-      this.callAjax('oi')
+      axios.get(resource_url).then(response => console.log(response))
     }
   }
 }
