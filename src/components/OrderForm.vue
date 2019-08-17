@@ -49,9 +49,9 @@ export default {
   },
   methods: {
     makeAnOrder: function (evt) {
-      let resource_url = 'https://bdt-backend.herokuapp.com/admin'
+      let resourceUrl = 'https://bdt-backend.herokuapp.com/admin'
       evt.preventDefault()
-      axios.get(resource_url).then(response => console.log(response))
+      axios.get(resourceUrl).then(response => console.log(response))
     }
   }
 }
