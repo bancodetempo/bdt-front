@@ -21,6 +21,14 @@
 </template>
 
 <script>
+const ajaxMixin = {
+  methods: {
+    callAjax (resource) {
+      console.log(resource)
+    }
+  }
+}
+
 export default {
   name: 'OrderForm',
   data: () => {
@@ -31,13 +39,14 @@ export default {
       order_price: 0
     }
   },
+  mixins: [ajaxMixin],
   props: {
     msg: String
   },
   methods: {
     makeAnOrder: function (evt) {
       evt.preventDefault()
-      console.log(this)
+      this.callAjax('oi')
     }
   }
 }
