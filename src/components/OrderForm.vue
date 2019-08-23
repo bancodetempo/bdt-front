@@ -41,7 +41,6 @@ export default {
   methods: {
     makeAnOrder: function (evt) {
       let resourceUrl = API_URL
-      console.log(resourceUrl)
       evt.preventDefault()
       axios.get(resourceUrl).then(response => console.log(response))
     }
