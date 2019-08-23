@@ -1,21 +1,16 @@
 <template>
   <div id="app">
-    <OrderForm msg="Bem-vindo(a) ao Banco de Tempo"/>
+    <router-view/>
   </div>
 </template>
 
 <script>
-import OrderForm from './components/OrderForm.vue'
-
 export default {
-  name: 'app',
-  components: {
-    OrderForm
-  }
+  name: 'App'
 }
 </script>
 
-<style lang="scss">
+<style>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

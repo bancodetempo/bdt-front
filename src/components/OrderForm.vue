@@ -21,17 +21,9 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from 'axios'
 
-const ajaxMixin = {
-  methods: {
-    callAjax (resource) {
-      console.log(resource)
-    }
-  }
-}
-
-const API_URL = 'https://bdt-backend.herokuapp.com/api/'
+const API_URL = process.env.ROOT_API
 
 export default {
   name: 'OrderForm',
@@ -43,13 +35,13 @@ export default {
       order_price: 0
     }
   },
-  mixins: [ajaxMixin],
   props: {
     msg: String
   },
   methods: {
     makeAnOrder: function (evt) {
-      let resourceUrl = 'https://bdt-backend.herokuapp.com/admin'
+      let resourceUrl = API_URL
+      console.log(resourceUrl)
       evt.preventDefault()
       axios.get(resourceUrl).then(response => console.log(response))
     }
@@ -58,5 +50,5 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
+<style>
 </style>
