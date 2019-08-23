@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <div>Bem-vindo ao Banco de Tempo</div>
     <router-view/>
   </div>
 </template>
