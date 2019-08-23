@@ -1,5 +1,5 @@
 'use strict'
 module.exports = {
   NODE_ENV: '"production"',
-  ROOT_API: '"http://bdt-backend.herokuapp.com/"'
+  ROOT_API: process.env.VUE_APP_ROOT_API
 }
