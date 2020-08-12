@@ -1,7 +1,6 @@
 import React from 'react';
-import './App.css';
 import { Switch, Route, BrowserRouter } from "react-router-dom";
-import Transferencia from './pages/tranferencia';
+import Transferencia from './pages/Tranferencia';
 
 
 const App = () => {

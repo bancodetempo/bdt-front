@@ -1,12 +1,14 @@
 import React from 'react';
-import './Transaction.css';
-
+import "./Components.css"
 import axios from 'axios';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
+
+import HourGlass from '../img/hourglass.png';
+import Shaka from '../img/shaka.png'
 
 import useForm from './../hooks/Formulario';
 
@@ -48,7 +50,9 @@ const Transaction = () =>{
   }
 
   return(
-    <Card>
+    <Card style={{ height: "75vh" }}>
+      <p id="title-form">Transação de Horas</p>
+      <p id="subtitle-form">Realizou uma troca pelo Banco do Tempo? Faça aqui sua transferência de créditos.</p>
       <Form
         onSubmit={submitForm}
         style={{ textAlign: "left" }}
@@ -85,7 +89,7 @@ const Transaction = () =>{
         <Form.Row>
           <Form.Group as={Col} controlId="formHours">
             <Form.Label>
-              <img src={process.env.PUBLIC_URL + '/hourglass.png'}
+              <img src={HourGlass}
                 alt="Hourglass emoji"
                 style={{ height: "2em", width: "2em" }}
               />
@@ -104,7 +108,7 @@ const Transaction = () =>{
           </Form.Group>
           <Form.Group as={Col} controlId="formWhat">
             <Form.Label>
-              <img src={process.env.PUBLIC_URL + '/shaka.png'}
+              <img src={Shaka}
                 alt="Shaka emoji"
                 style={{ height: "2em", width: "2em" }}
               />
