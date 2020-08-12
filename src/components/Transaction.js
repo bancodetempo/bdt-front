@@ -67,7 +67,7 @@ const Transaction = () =>{
               type="email" 
               placeholder="Email de origem"
               onChange={handleChange} 
-              value={form.comentario}
+              value={form.formFrom}
             />
           </Form.Group>
 
@@ -79,7 +79,8 @@ const Transaction = () =>{
               type="email" 
               placeholder="Email de destino"
               onChange={handleChange} 
-              value={form.comentario}
+              value={form.formTo}
+        console.log(res)
             />
           </Form.Group>
         </Form.Row>
@@ -103,7 +104,7 @@ const Transaction = () =>{
               min="0" 
               placeholder="0.0"
               onChange={handleChange}
-              value={form.comentario}
+              value={form.formHours}
             />
           </Form.Group>
           <Form.Group as={Col} controlId="formWhat">
@@ -119,7 +120,7 @@ const Transaction = () =>{
               name="formWhat" 
               type="text"
               onChange={handleChange}
-              value={form.comentario}
+              value={form.formWhat}
             />
           </Form.Group>
         </Form.Row>
