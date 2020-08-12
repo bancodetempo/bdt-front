@@ -1,0 +1,16 @@
+.App {
+  text-align: center;
+}
+
+.title {
+  padding: 10px;
+}
+
+body {
+  background-image: url("/background.png");
+  background-size: 100%;
+}
+
+.row {
+  min-height: 70px;
+}
