@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route, BrowserRouter } from "react-router-dom";
-import Transferencia from './pages/Tranferencia';
+import Transfer from './pages/Transfer';
 
 
 const App = () => {
@@ -9,7 +9,7 @@ const App = () => {
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
-          <Transferencia />
+          <Transfer />
         </Route>
       </Switch>
     

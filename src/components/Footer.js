@@ -1,8 +1,8 @@
 import React from "react";
 
-const Rodape = () =>{
+const Footer = () =>{
     return(
-        <section id="rodape">
+        <section id="footer">
             <a>Quero Participar</a>
             <a>Como funciona</a>
             <section>
@@ -13,4 +13,4 @@ const Rodape = () =>{
     )
 }
 
-export default Rodape;
+export default Footer;

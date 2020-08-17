@@ -1,8 +1,6 @@
 import { useState } from "react";
 
 const useForm = (initialValues) => {
-
-  console.log(initialValues)
   const [form, setForm] = useState(initialValues);        
     const onChange = (name, value) => {
       const newForm = { ...form, [name]: value };

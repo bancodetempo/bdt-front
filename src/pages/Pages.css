@@ -4,7 +4,7 @@
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-#tela-toda {
+#whole-screen {
   width: 100vw;
   height: 100vh;
 }
@@ -29,6 +29,6 @@
   color: #233648;
 }
 
-#form{
+.form-transaction{
   grid-area: 2/2/3/3;
 }

@@ -5,7 +5,7 @@ import styled from "styled-components";
 import BackgroundImage from "../img/background.png";
 import HourGlass from "../img/hourglass.png"
 
-import Rodape from '../components/Rodape';
+import Footer from '../components/Footer';
 import Transaction from '../components/Transaction';
 
 const Container = styled.div`
@@ -18,10 +18,10 @@ const Container = styled.div`
     grid-template-rows: 1fr 9fr;
     grid-template-columns: 23% 54% 23%;
 `
-const Transferencia = () =>{
+const Transfer = () =>{
 
     return(
-        <section id="tela-toda">
+        <section id="whole-screen">
             <Container>
                 <div className="title">
                     <img src={HourGlass}
@@ -30,11 +30,11 @@ const Transferencia = () =>{
                     /> &nbsp;&nbsp;
                     <p><b>Banco de Tempo</b> Florianópolis</p>
                 </div>
-                <section id="form"><Transaction/></section>
+                <section className="form-transaction"><Transaction/></section>
             </Container>
-            <Rodape />
+            <Footer />
         </section>
     )
 }
 
-export default Transferencia
+export default Transfer

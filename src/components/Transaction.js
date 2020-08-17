@@ -10,7 +10,7 @@ import Card from 'react-bootstrap/Card';
 import HourGlass from '../img/hourglass.png';
 import Shaka from '../img/shaka.png'
 
-import useForm from './../hooks/Formulario';
+import useForm from '../hooks/Form';
 
 const Transaction = () =>{
 
@@ -80,7 +80,6 @@ const Transaction = () =>{
               placeholder="Email de destino"
               onChange={handleChange} 
               value={form.formTo}
-        console.log(res)
             />
           </Form.Group>
         </Form.Row>

@@ -27,7 +27,7 @@
     color: #4F4F4F;
 }
 
-#rodape a, #rodape a:hover, #rodape a:visited{
+#footer a, #footer a:hover, #footer a:visited{
     margin: 4vh 0 0 5vw;
     text-decoration: none;
     color: white;
@@ -37,30 +37,30 @@
     cursor: pointer;
 }
 
-#rodape p{
+#footer p{
     color: white;
     font-style: normal;
     line-height: 16px;
     margin: 0;
 }
 
-#rodape p:first-of-type{
+#footer p:first-of-type{
     font-weight: bold;
     font-size: 16px;
 }
 
-#rodape p:last-of-type{
+#footer p:last-of-type{
     font-weight: normal;
     font-size: 14px;
     margin-top: 1vh;
     
 }
 
-#rodape > section{
+#footer > section{
     margin: 4vh 0 0 5vw;
 }
 
-#rodape{
+#footer{
     height: 12vh;
     display: flex;
     flex-wrap: nowrap;
