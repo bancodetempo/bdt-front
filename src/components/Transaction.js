@@ -34,10 +34,10 @@ const Transaction = () => {
 
   const handleSubmit = async () => {
     const body = {
-      formFrom: form.formFrom,
-      formTo: form.formTo,
-      formHours: form.formHours,
-      formWhat: form.formWhat
+      from: form.formFrom,
+      to: form.formTo,
+      hours: form.formHours,
+      what: form.formWhat
     };
     axios
       .post(transactionEndpoint, body)
