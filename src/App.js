@@ -1,37 +1,33 @@
 import React from 'react';
-import './App.css';
+import 'index.css';
+import Router from 'components/Router';
+import Header from 'components/Header';
+import Footer from 'components/Footer';
+import styled from 'styled-components';
+import BackgroundImage from 'img/background.png';
 
-import Container from 'react-bootstrap/Container';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-
-import Transaction from './forms/Transaction';
-
-class App extends React.Component {
-
-  render() {
-    return (
+const WholeScreen = styled.section`
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+`;
+const Container = styled.section`
+  background-image: url("${BackgroundImage}");
+  background-color: #000000;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 88%;
+`;
+const App = () => {
+  return (
+    <WholeScreen>
       <Container>
-        <Row>
-          <Col>
-            <div className="title">
-              <img src={process.env.PUBLIC_URL + '/hourglass.png'}
-                    alt="Hourglass emoji"
-                    style={{height: "2em", width: "2em"}}
-              /> &nbsp;&nbsp;
-              <b>Banco de Tempo</b> Florianópolis
-            </div>
-          </Col>
-        </Row>
-        <Row>
-          <Col/>
-          <Col xs={7}><Transaction/></Col>
-          <Col/>
-        </Row>
-        <Row><Col/></Row>
+        <Header />
+        <Router />
       </Container>
-    );
-  }
-}
+      <Footer />
+    </WholeScreen>
+  );
+};
 
 export default App;
