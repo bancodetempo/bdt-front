@@ -1,20 +1,33 @@
 import React from 'react';
-import { Switch, Route, BrowserRouter } from "react-router-dom";
-import Transfer from './pages/Transfer';
+import 'index.css';
+import Router from 'components/Router';
+import Header from 'components/Header';
+import Footer from 'components/Footer';
+import styled from 'styled-components';
+import BackgroundImage from 'img/background.png';
 
-
+const WholeScreen = styled.section`
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+`;
+const Container = styled.section`
+  background-image: url("${BackgroundImage}");
+  background-color: #000000;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 88%;
+`;
 const App = () => {
-
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/">
-          <Transfer />
-        </Route>
-      </Switch>
-    
-    </BrowserRouter>
-  )
-}
+    <WholeScreen>
+      <Container>
+        <Header />
+        <Router />
+      </Container>
+      <Footer />
+    </WholeScreen>
+  );
+};
 
 export default App;
