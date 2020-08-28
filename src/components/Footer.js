@@ -4,8 +4,8 @@ import './Components.css';
 const Footer = () => {
   return (
     <section id="footer">
-      <a>Quero Participar</a>
-      <a>Como funciona</a>
+      <a href="/">Quero Participar</a>
+      <a href="/">Como funciona</a>
       <section>
         <p>Dúvida ou sugestão?</p>
         <p>suporte@bancodetempo.com</p>
