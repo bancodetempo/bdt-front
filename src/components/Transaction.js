@@ -13,7 +13,7 @@ import Arrow from 'img/arrow.png';
 
 import useForm from 'hooks/Form';
 
-const transactionEndpoint = process.env.REACT_APP_BACKEND_URL + '/api/v0/transaction';
+const transactionEndpoint = process.env.REACT_APP_BACKEND_URL + '/api/v0/orders/';
 
 const Transaction = () => {
   const { form, onChange, resetForm } = useForm({
@@ -34,10 +34,10 @@ const Transaction = () => {
 
   const handleSubmit = async () => {
     const body = {
-      from: form.formFrom,
-      to: form.formTo,
-      hours: form.formHours,
-      what: form.formWhat
+      requester: form.formFrom,
+      grantor: form.formTo,
+      order_price: form.formHours,
+      description: form.formWhat
     };
     axios
       .post(transactionEndpoint, body)
