@@ -1,10 +1,10 @@
 import React from 'react';
 import './Pages.css';
-import Transaction from 'components/Transaction';
+import Order from 'components/Order';
 
 const Transfer = () =>
-  <section className="form-transaction">
-    <Transaction/>
+  <section className="form-order">
+    <Order/>
   </section>;
 
 export default Transfer;

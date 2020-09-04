@@ -1,6 +1,7 @@
 import React from 'react';
 import './Components.css';
 import axios from 'axios';
+import { Endpoints } from 'Endpoints';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -13,14 +14,12 @@ import Arrow from 'img/arrow.png';
 
 import useForm from 'hooks/Form';
 
-const transactionEndpoint = process.env.REACT_APP_BACKEND_URL + '/api/v0/transaction';
-
-const Transaction = () => {
+const Order = () => {
   const { form, onChange, resetForm } = useForm({
-    formFrom: '',
-    formTo: '',
-    formHours: '',
-    formWhat: ''
+    requester: '',
+    grantor: '',
+    orderPrice: '',
+    description: ''
   });
 
   const submitForm = event => {
@@ -34,13 +33,13 @@ const Transaction = () => {
 
   const handleSubmit = async () => {
     const body = {
-      from: form.formFrom,
-      to: form.formTo,
-      hours: form.formHours,
-      what: form.formWhat
+      requester: form.requester,
+      grantor: form.grantor,
+      order_price: form.orderPrice,
+      description: form.description
     };
     axios
-      .post(transactionEndpoint, body)
+      .post(Endpoints.orders, body)
       .then(res => {
         console.log(res);
         resetForm();
@@ -59,30 +58,30 @@ const Transaction = () => {
         style={{ textAlign: 'left' }}
       >
         <Form.Row style={{ alignItems: 'center' }}>
-          <Form.Group as={Col} controlId="formFrom">
+          <Form.Group as={Col} controlId="requester">
             <Form.Label><b>De</b></Form.Label>
             <Form.Text>Insira o email de quem <b>pediu</b> o serviço</Form.Text>
             <Form.Control
               required
-              name="formFrom"
+              name="requester"
               type="email"
               placeholder="Email de origem"
               onChange={handleChange}
-              value={form.formFrom}
+              value={form.requester}
             />
           </Form.Group>
 
           <img id='arrow' src={Arrow} alt='Arrow icon'/>
 
-          <Form.Group as={Col} controlId="formTo">
+          <Form.Group as={Col} controlId="grantor">
             <Form.Label><b>Para</b></Form.Label>
             <Form.Text>Insira o email de quem <b>realizou</b> o serviço</Form.Text>
             <Form.Control
-              name="formTo"
+              name="grantor"
               type="email"
               placeholder="Email de destino"
               onChange={handleChange}
-              value={form.formTo}
+              value={form.grantor}
             />
           </Form.Group>
         </Form.Row>
@@ -90,33 +89,33 @@ const Transaction = () => {
         <hr />
         <br />
         <Form.Row>
-          <Form.Group as={Col} controlId="formHours">
+          <Form.Group as={Col} controlId="orderPrice">
             <Form.Label>
               <img src={Clock} className='icone-troca' alt="Clock icon" />
               <b>Horas</b>
             </Form.Label>
             <Form.Text>Quantas horas em divisão de 0.5</Form.Text>
             <Form.Control
-              name="formHours"
+              name="orderPrice"
               type="number"
               step="0.5"
               min="0"
               placeholder="0.0"
               onChange={handleChange}
-              value={form.formHours}
+              value={form.orderPrice}
             />
           </Form.Group>
-          <Form.Group as={Col} controlId="formWhat">
+          <Form.Group as={Col} controlId="description">
             <Form.Label>
               <img src={Swap} className='icone-troca' alt="Swap icon" />
               <b>O que foi trocado</b>
             </Form.Label>
             <Form.Text>Que serviço, produto ou ajuda</Form.Text>
             <Form.Control
-              name="formWhat"
+              name="description"
               type="text"
               onChange={handleChange}
-              value={form.formWhat}
+              value={form.description}
             />
           </Form.Group>
         </Form.Row>
@@ -132,4 +131,4 @@ const Transaction = () => {
   );
 };
 
-export default Transaction;
+export default Order;
