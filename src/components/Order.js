@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Components.css';
 import axios from 'axios';
 import { Endpoints } from 'Endpoints';
@@ -8,6 +8,9 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 
+import { AsyncTypeahead } from 'react-bootstrap-typeahead';
+import 'react-bootstrap-typeahead/css/Typeahead.css';
+
 import Clock from 'img/clock.svg';
 import Swap from 'img/repeat.svg';
 import Arrow from 'img/arrow.png';
@@ -15,6 +18,9 @@ import Arrow from 'img/arrow.png';
 import useForm from 'hooks/Form';
 
 const Order = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [options, setOptions] = useState([]);
+
   const { form, onChange, resetForm } = useForm({
     requester: '',
     grantor: '',
@@ -61,13 +67,23 @@ const Order = () => {
           <Form.Group as={Col} controlId="requester">
             <Form.Label><b>De</b></Form.Label>
             <Form.Text>Insira o email de quem <b>pediu</b> o serviço</Form.Text>
-            <Form.Control
-              required
-              name="requester"
-              type="email"
-              placeholder="Email de origem"
-              onChange={handleChange}
-              value={form.requester}
+            <AsyncTypeahead
+              id="requester"
+              placeholder="Nome do requisitante"
+              isLoading={isLoading}
+              labelKey={option => `${option.first_name} ${option.last_name}`}
+              onSearch={(query) => {
+                setIsLoading(true);
+                fetch(Endpoints.users + query)
+                  .then(resp => resp.json())
+                  .then(json => {
+                    setOptions(json);
+                    setIsLoading(false);
+                  });
+              }
+              }
+              options={options}
+              onChange={(evt) => { form.requester = evt.length && evt[0].id; } }
             />
           </Form.Group>
 
@@ -76,12 +92,23 @@ const Order = () => {
           <Form.Group as={Col} controlId="grantor">
             <Form.Label><b>Para</b></Form.Label>
             <Form.Text>Insira o email de quem <b>realizou</b> o serviço</Form.Text>
-            <Form.Control
-              name="grantor"
-              type="email"
-              placeholder="Email de destino"
-              onChange={handleChange}
-              value={form.grantor}
+            <AsyncTypeahead
+              id="grantor"
+              placeholder="Nome do concedente"
+              isLoading={isLoading}
+              labelKey={option => `${option.first_name} ${option.last_name}`}
+              onSearch={(query) => {
+                setIsLoading(true);
+                fetch(Endpoints.users + query)
+                  .then(resp => resp.json())
+                  .then(json => {
+                    setOptions(json);
+                    setIsLoading(false);
+                  });
+              }
+              }
+              options={options}
+              onChange={(evt) => { form.grantor = evt.length && evt[0].id; } }
             />
           </Form.Group>
         </Form.Row>
