@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import './Components.css';
-import axios from 'axios';
-import { Endpoints } from 'Endpoints';
-import { createMuiTheme, ThemeProvider, withTheme } from "@material-ui/core/styles";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
+import Autocomplete from "@material-ui/lab/Autocomplete";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -11,10 +11,8 @@ import CardContent from "@material-ui/core/CardContent";
 import ButtonM from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import TextField from '@material-ui/core/TextField';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-
-import { AsyncTypeahead } from 'react-bootstrap-typeahead';
-import 'react-bootstrap-typeahead/css/Typeahead.css';
 
 import Clock from 'img/clock.svg';
 import Swap from 'img/repeat.svg';
@@ -42,18 +40,16 @@ const useStyles = makeStyles({
     lineHeight: "42px",
     color: "#19B7E6",
     textAlign: "center",
+    margin: "2% 0 1% 0",
   },
   subtitle: {
-    marginBottom: "5vh",
+    marginBottom: "3%",
     fontFamily: "Roboto",
     fontWweight: "normal",
     fontSize: "1vw",
     lineHeight: "19px",
     color: "#4F4F4F",
     textAlign: "center",
-  },
-  pos: {
-    marginBottom: 12,
   },
   button: {
     backgroundColor: "#EB5757",
@@ -63,11 +59,17 @@ const useStyles = makeStyles({
     fontSize: "18px",
     "&:hover": {
       backgroundColor: "#973737",
-    }
+    },
   },
   input: {
     width: "20vw",
     height: "7vh",
+    "& .MuiFilledInput-input": {
+      padding: "5% 4%",
+    },
+    "& .MuiAutocomplete-inputRoot": {
+      padding: "2% 1%",
+    },
   },
 });
 
@@ -87,41 +89,97 @@ const inputProps = {
   min: 0
 };
 
-const Order = () => {
+const AutoCompleteInput = (props) => {
   const classes = useStyles();
-  const [isLoading, setIsLoading] = useState(false);
-  const [options, setOptions] = useState([]);
+  return (
+    <TextField
+      {...props.params}
+      required
+      placeholder={props.placeholder}
+      variant="filled"
+      className={classes.input}
+      InputProps={{
+        ...props.params.InputProps,
+        endAdornment: (
+          <React.Fragment>
+            {props.loading ? (
+              <CircularProgress color="inherit" size={20} />
+            ) : null}
+            {props.params.InputProps.endAdornment}
+          </React.Fragment>
+        ),
+      }}
+    />
+  );
+};
+
+const Order = (props) => {
+  const classes = useStyles();
+  const [inputValue, setInputValue] = useState(""); 
+  const [requester, setRequester] = useState("");
+  const [grantor, setGrantor] = useState("")
+  const [options, setOptions] = useState([]); 
+  const [loadingReq, setLoadingReq] = useState(false);
+  const [loadingGra, setLoadingGra] = useState(false);
 
   const { form, onChange, resetForm } = useForm({
-    requester: '',
-    grantor: '',
-    orderPrice: '',
-    description: ''
+    requester: "",
+    grantor: "",
+    orderPrice: "",
+    description: "",
   });
 
-  const submitForm = event => {
+   useEffect(() => {
+     if (inputValue) {
+       fetchFromAPI(inputValue).then((result) => {
+        loadingReq ? setLoadingReq(false): setLoadingGra(false); 
+        setOptions(result);
+       });
+     }
+   }, [inputValue]);
+
+  const submitForm = (event) => {
     event.preventDefault();
   };
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     const { name, value } = event.target;
     onChange(name, value);
   };
 
-  const handleSubmit = async () => {
+  const getId = async (input, name) => {
+    const response = await axios.get(
+      `https://bdt-backend.herokuapp.com/api/v0/users/?search=${name}`
+    );
+
+    onChange(input, response.data[0].id);
+   
+  };
+
+   const fetchFromAPI = async (searchedValue) => {
+     const response = await axios.get(
+       `https://bdt-backend.herokuapp.com/api/v0/users/?search=${searchedValue}`
+     );
+
+     return response.data.map((person) => {
+       return `${person.first_name} ${person.last_name}`;
+     });
+   };
+   
+  const handleSubmit = async () => {    
     const body = {
       requester: form.requester,
       grantor: form.grantor,
       order_price: form.orderPrice,
-      description: form.description
+      description: form.description,
     };
     axios
-      .post(Endpoints.orders, body)
-      .then(res => {
+      .post("https://bdt-backend.herokuapp.com/api/v0/orders/", body)
+      .then((res) => {
         console.log(res);
         resetForm();
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   };
@@ -141,31 +199,59 @@ const Order = () => {
             Realizou uma troca pelo Banco do Tempo? Faça aqui sua transferência
             de créditos.
           </Typography>
-          <form>
+          <form onSubmit={submitForm}>
             <section className="container-input">
               <article>
                 <p className="title-input">De</p>
                 <p className="subtitle-input">
-                  Insira o email de quem <b>pediu</b> o serviço
+                  Insira o nome de quem <b>pediu</b> o serviço
                 </p>
-                <TextField
-                  required
-                  placeholder="Nome da pessoa"
-                  variant="filled"
-                  className={classes.input}
+                <Autocomplete
+                  options={options}
+                  autoComplete
+                  value={requester}
+                  onChange={(event, newValue) => {
+                    setRequester(newValue)
+                    getId("requester", newValue);
+                  }}
+                  onInputChange={(event, newInputValue) => {
+                    setLoadingReq(true);
+                    setInputValue(newInputValue);
+                  }}
+                  renderInput={(params) => (
+                    <AutoCompleteInput
+                      placeholder={"Nome do requisitante"}
+                      params={params}
+                      loading={loadingReq}
+                    />
+                  )}
                 />
               </article>
               <img id="arrow" src={Arrow} alt="Arrow icon" />
               <article>
                 <p className="title-input">Para</p>
                 <p className="subtitle-input">
-                  Email de quem <b>pediu</b> o serviço
+                  Insira o nome de quem <b>realizou</b> o serviço
                 </p>
-                <TextField
-                  required
-                  placeholder="E-mail de destino"
-                  variant="filled"
-                  className={classes.input}
+                <Autocomplete
+                  options={options}
+                  autoComplete
+                  value={grantor}
+                  onChange={(event, newValue) => {
+                    setGrantor(newValue);
+                    getId("grantor", newValue);
+                  }}
+                  onInputChange={(event, newInputValue) => {
+                    setLoadingGra(true);
+                    setInputValue(newInputValue);
+                  }}
+                  renderInput={(params) => (
+                    <AutoCompleteInput
+                      placeholder={"Nome de destino"}
+                      params={params}
+                      loading={loadingGra}
+                    />
+                  )}
                 />
               </article>
             </section>
@@ -186,6 +272,9 @@ const Order = () => {
                   className={classes.input}
                   inputProps={inputProps}
                   placeholder="0.0"
+                  name="orderPrice"
+                  onChange={handleChange}
+                  value={form.orderPrice}
                 />
               </article>
               <article>
@@ -194,119 +283,25 @@ const Order = () => {
                 <p className="subtitle-input">Que serviço, produto ou ajuda</p>
                 <TextField
                   required
-                  placeholder="Nome da pessoa"
+                  placeholder="Descrição"
                   variant="filled"
                   className={classes.input}
+                  name="description"
+                  onChange={handleChange}
+                  value={form.description}
                 />
               </article>
             </section>
           </form>
         </CardContent>
         <CardActions>
-          <ButtonM className={classes.button}>SOLICITAR</ButtonM>
+          <ButtonM onClick={handleSubmit} className={classes.button}>
+            SOLICITAR
+          </ButtonM>
         </CardActions>
       </Card>
     </ThemeProvider>
-    // <Card style={{ height: '75vh' }}>
-    //   <p id="title-form">Transação de Horas</p>
-    //   <p id="subtitle-form">Realizou uma troca pelo Banco do Tempo? Faça aqui sua transferência de créditos.</p>
-    //   <Form
-    //     onSubmit={submitForm}
-    //     style={{ textAlign: 'left' }}
-    //   >
-    //     <Form.Row style={{ alignItems: 'center' }}>
-    //       <Form.Group as={Col} controlId="requester">
-    //         <Form.Label><b>De</b></Form.Label>
-    //         <Form.Text>Insira o email de quem <b>pediu</b> o serviço</Form.Text>
-    //         <AsyncTypeahead
-    //           id="requester"
-    //           placeholder="Nome do requisitante"
-    //           isLoading={isLoading}
-    //           labelKey={option => `${option.first_name} ${option.last_name}`}
-    //           onSearch={(query) => {
-    //             setIsLoading(true);
-    //             fetch(Endpoints.users + query)
-    //               .then(resp => resp.json())
-    //               .then(json => {
-    //                 setOptions(json);
-    //                 setIsLoading(false);
-    //               });
-    //           }
-    //           }
-    //           options={options}
-    //           onChange={(evt) => { form.requester = evt.length && evt[0].id; } }
-    //         />
-    //       </Form.Group>
-
-    //       <img id='arrow' src={Arrow} alt='Arrow icon'/>
-
-    //       <Form.Group as={Col} controlId="grantor">
-    //         <Form.Label><b>Para</b></Form.Label>
-    //         <Form.Text>Insira o email de quem <b>realizou</b> o serviço</Form.Text>
-    //         <AsyncTypeahead
-    //           id="grantor"
-    //           placeholder="Nome do concedente"
-    //           isLoading={isLoading}
-    //           labelKey={option => `${option.first_name} ${option.last_name}`}
-    //           onSearch={(query) => {
-    //             setIsLoading(true);
-    //             fetch(Endpoints.users + query)
-    //               .then(resp => resp.json())
-    //               .then(json => {
-    //                 setOptions(json);
-    //                 setIsLoading(false);
-    //               });
-    //           }
-    //           }
-    //           options={options}
-    //           onChange={(evt) => { form.grantor = evt.length && evt[0].id; } }
-    //         />
-    //       </Form.Group>
-    //     </Form.Row>
-    //     <br />
-    //     <hr />
-    //     <br />
-    //     <Form.Row>
-    //       <Form.Group as={Col} controlId="orderPrice">
-    //         <Form.Label>
-    //           <img src={Clock} className='icone-troca' alt="Clock icon" />
-    //           <b>Horas</b>
-    //         </Form.Label>
-    //         <Form.Text>Quantas horas em divisão de 0.5</Form.Text>
-    //         <Form.Control
-    //           name="orderPrice"
-    //           type="number"
-    //           step="0.5"
-    //           min="0"
-    //           placeholder="0.0"
-    //           onChange={handleChange}
-    //           value={form.orderPrice}
-    //         />
-    //       </Form.Group>
-    //       <Form.Group as={Col} controlId="description">
-    //         <Form.Label>
-    //           <img src={Swap} className='icone-troca' alt="Swap icon" />
-    //           <b>O que foi trocado</b>
-    //         </Form.Label>
-    //         <Form.Text>Que serviço, produto ou ajuda</Form.Text>
-    //         <Form.Control
-    //           name="description"
-    //           type="text"
-    //           onChange={handleChange}
-    //           value={form.description}
-    //         />
-    //       </Form.Group>
-    //     </Form.Row>
-
-    //     <Form.Row style={{ justifyContent: 'center' }} >
-    //       <Button onClick={handleSubmit} variant="danger">
-    //         Solicitar
-    //       </Button>
-    //     </Form.Row>
-    //     <br />
-    //   </Form>
-    // </Card>
   );
-};
+};;
 
 export default Order;
