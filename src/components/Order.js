@@ -148,21 +148,21 @@ const Order = (props) => {
   };
 
   const getId = async (input, name) => {
-    const response = await axios.get(
-      `https://bdt-backend.herokuapp.com/api/v0/users/?search=${name}`
-    );
+    if(name){
+      const response = await axios.get(
+        `https://bdt-backend.herokuapp.com/api/v0/users/?search=${name}`
+      );
 
-    onChange(input, response.data[0].id);
-   
+      onChange(input, response.data[0].id);
+    }  
   };
 
-   const fetchFromAPI = async (searchedValue) => {
-     const response = await axios.get(
-       `https://bdt-backend.herokuapp.com/api/v0/users/?search=${searchedValue}`
-     );
-
-     return response.data.map((person) => {
-       return `${person.first_name} ${person.last_name}`;
+  const fetchFromAPI = async (searchedValue) => {
+    const response = await axios.get(
+      `https://bdt-backend.herokuapp.com/api/v0/users/?search=${searchedValue}`
+    );
+    return response.data.map((person) => {
+      return `${person.first_name} ${person.last_name}`;
      });
    };
    
