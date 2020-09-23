@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import './Components.css';
-import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import ButtonM from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
+import axios from 'axios';
+import './Components.css';
+import { createMuiTheme, ThemeProvider, makeStyles } from '@material-ui/core/styles';
+
+import Autocomplete from '@material-ui/lab/Autocomplete';
+
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import ButtonM from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
-
 
 import Clock from 'img/clock.svg';
 import Swap from 'img/repeat.svg';
@@ -22,66 +23,66 @@ import useForm from 'hooks/Form';
 
 const useStyles = makeStyles({
   root: {
-    width: "54vw",
-    height: "75vh",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    marginTop: "2%",
+    width: '54vw',
+    height: '75vh',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginTop: '2%'
   },
   content: {
-    width: "90%",
-    padding: "0",
+    width: '90%',
+    padding: '0'
   },
   title: {
-    fontFamily: "IBM Plex Sans",
-    fontWeight: "bold",
-    fontSize: "2.5vw",
-    lineHeight: "42px",
-    color: "#19B7E6",
-    textAlign: "center",
-    margin: "2% 0 1% 0",
+    fontFamily: 'IBM Plex Sans',
+    fontWeight: 'bold',
+    fontSize: '2.5vw',
+    lineHeight: '42px',
+    color: '#19B7E6',
+    textAlign: 'center',
+    margin: '2% 0 1% 0'
   },
   subtitle: {
-    marginBottom: "3%",
-    fontFamily: "Roboto",
-    fontWweight: "normal",
-    fontSize: "1vw",
-    lineHeight: "19px",
-    color: "#4F4F4F",
-    textAlign: "center",
+    marginBottom: '3%',
+    fontFamily: 'Roboto',
+    fontWweight: 'normal',
+    fontSize: '1vw',
+    lineHeight: '19px',
+    color: '#4F4F4F',
+    textAlign: 'center'
   },
   button: {
-    backgroundColor: "#EB5757",
-    borderRadius: "4px",
-    color: "white",
-    width: "20vw",
-    fontSize: "18px",
-    "&:hover": {
-      backgroundColor: "#973737",
-    },
+    backgroundColor: '#EB5757',
+    borderRadius: '4px',
+    color: 'white',
+    width: '20vw',
+    fontSize: '18px',
+    '&:hover': {
+      backgroundColor: '#973737'
+    }
   },
   input: {
-    width: "20vw",
-    height: "7vh",
-    "& .MuiFilledInput-input": {
-      padding: "5% 4%",
+    width: '20vw',
+    height: '7vh',
+    '& .MuiFilledInput-input': {
+      padding: '5% 4%'
     },
-    "& .MuiAutocomplete-inputRoot": {
-      padding: "2% 1%",
-    },
-  },
+    '& .MuiAutocomplete-inputRoot': {
+      padding: '2% 1%'
+    }
+  }
 });
 
 const MyTheme = createMuiTheme({
   palette: {
     primary: {
-      light: "#037fff",
-      contrastText: "#fff",
-      main: "#8FDFF4",
+      light: '#037fff',
+      contrastText: '#fff',
+      main: '#8FDFF4',
       dark: '#10121b'
     }
-  },
+  }
 });
 
 const inputProps = {
@@ -107,7 +108,7 @@ const AutoCompleteInput = (props) => {
             ) : null}
             {props.params.InputProps.endAdornment}
           </React.Fragment>
-        ),
+        )
       }}
     />
   );
@@ -115,28 +116,28 @@ const AutoCompleteInput = (props) => {
 
 const Order = (props) => {
   const classes = useStyles();
-  const [inputValue, setInputValue] = useState(""); 
-  const [requester, setRequester] = useState("");
-  const [grantor, setGrantor] = useState("")
-  const [options, setOptions] = useState([]); 
+  const [inputValue, setInputValue] = useState('');
+  const [requester, setRequester] = useState('');
+  const [grantor, setGrantor] = useState('');
+  const [options, setOptions] = useState([]);
   const [loadingReq, setLoadingReq] = useState(false);
   const [loadingGra, setLoadingGra] = useState(false);
 
   const { form, onChange, resetForm } = useForm({
-    requester: "",
-    grantor: "",
-    orderPrice: "",
-    description: "",
+    requester: '',
+    grantor: '',
+    orderPrice: '',
+    description: ''
   });
 
-   useEffect(() => {
-     if (inputValue) {
-       fetchFromAPI(inputValue).then((result) => {
-        loadingReq ? setLoadingReq(false): setLoadingGra(false); 
+  useEffect(() => {
+    if (inputValue) {
+      fetchFromAPI(inputValue).then((result) => {
+        loadingReq ? setLoadingReq(false) : setLoadingGra(false);
         setOptions(result);
-       });
-     }
-   }, [inputValue]);
+      });
+    }
+  }, [inputValue]);
 
   const submitForm = (event) => {
     event.preventDefault();
@@ -148,13 +149,13 @@ const Order = (props) => {
   };
 
   const getId = async (input, name) => {
-    if(name){
+    if (name) {
       const response = await axios.get(
         `https://bdt-backend.herokuapp.com/api/v0/users/?search=${name}`
       );
 
       onChange(input, response.data[0].id);
-    }  
+    }
   };
 
   const fetchFromAPI = async (searchedValue) => {
@@ -163,18 +164,18 @@ const Order = (props) => {
     );
     return response.data.map((person) => {
       return `${person.first_name} ${person.last_name}`;
-     });
-   };
-   
-  const handleSubmit = async () => {    
+    });
+  };
+
+  const handleSubmit = async () => {
     const body = {
       requester: form.requester,
       grantor: form.grantor,
       order_price: form.orderPrice,
-      description: form.description,
+      description: form.description
     };
     axios
-      .post("https://bdt-backend.herokuapp.com/api/v0/orders/", body)
+      .post('https://bdt-backend.herokuapp.com/api/v0/orders/', body)
       .then((res) => {
         console.log(res);
         resetForm();
@@ -211,8 +212,8 @@ const Order = (props) => {
                   autoComplete
                   value={requester}
                   onChange={(event, newValue) => {
-                    setRequester(newValue)
-                    getId("requester", newValue);
+                    setRequester(newValue);
+                    getId('requester', newValue);
                   }}
                   onInputChange={(event, newInputValue) => {
                     setLoadingReq(true);
@@ -220,7 +221,7 @@ const Order = (props) => {
                   }}
                   renderInput={(params) => (
                     <AutoCompleteInput
-                      placeholder={"Nome do requisitante"}
+                      placeholder={'Nome do requisitante'}
                       params={params}
                       loading={loadingReq}
                     />
@@ -239,7 +240,7 @@ const Order = (props) => {
                   value={grantor}
                   onChange={(event, newValue) => {
                     setGrantor(newValue);
-                    getId("grantor", newValue);
+                    getId('grantor', newValue);
                   }}
                   onInputChange={(event, newInputValue) => {
                     setLoadingGra(true);
@@ -247,7 +248,7 @@ const Order = (props) => {
                   }}
                   renderInput={(params) => (
                     <AutoCompleteInput
-                      placeholder={"Nome de destino"}
+                      placeholder={'Nome de destino'}
                       params={params}
                       loading={loadingGra}
                     />
@@ -302,6 +303,16 @@ const Order = (props) => {
       </Card>
     </ThemeProvider>
   );
-};;
+}; ;
+
+AutoCompleteInput.propTypes = {
+  params: PropTypes.shape({
+    InputProps: PropTypes.shape({
+      endAdornment: PropTypes.node.isRequired
+    })
+  }).isRequired,
+  placeholder: PropTypes.string.isRequired,
+  loading: PropTypes.bool.isRequired
+};
 
 export default Order;
