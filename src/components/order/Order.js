@@ -3,14 +3,17 @@ import React from 'react';
 import axios from 'axios';
 import '../Components.css';
 import { ThemeProvider } from '@material-ui/core/styles';
-import { Styles, Theme } from './Styles';
-
-import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import ButtonM from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
+
+import {
+  OrderSubtitle,
+  OrderTitle,
+  OrderContent,
+  CardOrder,
+  Input,
+  Button,
+  Theme
+} from './Styles';
 
 import Clock from 'img/clock.svg';
 import Swap from 'img/repeat.svg';
@@ -26,8 +29,6 @@ const inputProps = {
 };
 
 const Order = (props) => {
-  const classes = Styles();
-
   const { form, onChange, resetForm } = useForm({
     requester: null,
     grantor: null,
@@ -64,19 +65,18 @@ const Order = (props) => {
 
   return (
     <ThemeProvider theme={Theme}>
-      <Card className={classes.root}>
-        <CardContent className={classes.content}>
-          <Typography
-            className={classes.title}
+      <CardOrder>
+        <OrderContent>
+          <OrderTitle
             color="textSecondary"
             gutterBottom
           >
             Transação de Horas
-          </Typography>
-          <Typography className={classes.subtitle}>
+          </OrderTitle>
+          <OrderSubtitle>
             Realizou uma troca pelo Banco do Tempo? Faça aqui sua transferência
             de créditos.
-          </Typography>
+          </OrderSubtitle>
           <form onSubmit={submitForm}>
             <section className="container-input">
               <article>
@@ -115,13 +115,12 @@ const Order = (props) => {
                 <img src={Clock} className="icone-troca" alt="Clock icon" />
                 <span className="title-input">Horas</span>
                 <p className="subtitle-input">
-                  Quantas horas em divisão de 0.5
+                  Quantas horas em divisão de 0,5
                 </p>
-                <TextField
+                <Input
                   required
                   type="number"
                   variant="filled"
-                  className={classes.input}
                   inputProps={inputProps}
                   placeholder="0.0"
                   name="orderPrice"
@@ -133,11 +132,10 @@ const Order = (props) => {
                 <img src={Swap} className="icone-troca" alt="Swap icon" />
                 <span className="title-input">O que foi trocado</span>
                 <p className="subtitle-input">Que serviço, produto ou ajuda</p>
-                <TextField
+                <Input
                   required
                   placeholder="Descrição"
                   variant="filled"
-                  className={classes.input}
                   name="description"
                   onChange={handleChange}
                   value={form.description}
@@ -145,13 +143,13 @@ const Order = (props) => {
               </article>
             </section>
           </form>
-        </CardContent>
+        </OrderContent>
         <CardActions>
-          <ButtonM onClick={handleSubmit} className={classes.button}>
+          <Button onClick={handleSubmit}>
             SOLICITAR
-          </ButtonM>
+          </Button>
         </CardActions>
-      </Card>
+      </CardOrder>
     </ThemeProvider>
   );
 }; ;

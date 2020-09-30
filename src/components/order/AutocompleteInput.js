@@ -1,21 +1,15 @@
 import React from 'react';
-
 import PropTypes from 'prop-types';
-
 import CircularProgress from '@material-ui/core/CircularProgress';
-import TextField from '@material-ui/core/TextField';
-
-import { Styles } from './Styles';
+import { Input } from './Styles';
 
 const AutocompleteInput = (props) => {
-  const classes = Styles();
   return (
-    <TextField
+    <Input
       {...props.params}
       required
       placeholder={props.placeholder}
       variant="filled"
-      className={classes.input}
       InputProps={{
         ...props.params.InputProps,
         endAdornment: (
