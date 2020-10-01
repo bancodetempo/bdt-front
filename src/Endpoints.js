@@ -1,4 +1,4 @@
-const backendUrl = process.env.REACT_APP_BACKEND_URL;
+const backendUrl = 'https://bdt-backend.herokuapp.com';
 
 export const Endpoints = {
   orders: backendUrl + '/api/v0/orders/',

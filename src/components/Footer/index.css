@@ -1,0 +1,40 @@
+#footer a, #footer a:hover, #footer a:visited{
+    margin: 4vh 0 0 5vw;
+    text-decoration: none;
+    color: white;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#footer p{
+    color: white;
+    font-style: normal;
+    line-height: 16px;
+    margin: 0;
+}
+
+#footer p:first-of-type{
+    font-weight: bold;
+    font-size: 16px;
+}
+
+#footer p:last-of-type{
+    font-weight: normal;
+    font-size: 14px;
+    margin-top: 1vh;
+
+}
+
+#footer > section{
+    margin: 4vh 0 0 5vw;
+}
+
+#footer{
+    height: 12%;
+    display: flex;
+    flex-wrap: nowrap;
+    background-color: #2D4053;
+    color: white;
+}

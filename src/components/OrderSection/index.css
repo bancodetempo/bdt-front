@@ -1,0 +1,21 @@
+.title-input{
+    font-weight: bold;
+    font-size:18px;
+    margin: 1% 0;
+}
+
+.subtitle-input{
+    font-size:14px;
+    margin: 1% 0 3% 1%;
+}
+
+.icon-exchange{
+    height: 2.2vw;
+    width: 2.2vw;
+    margin-right: 2%;
+}
+
+#title-container{
+    display: flex;
+    align-items: center;
+}

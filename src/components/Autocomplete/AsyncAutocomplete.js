@@ -1,25 +1,27 @@
 import React, { useState } from 'react';
 
+import { Endpoints } from 'Endpoints';
+
 import PropTypes from 'prop-types';
 
 import AutocompleteInput from './AutocompleteInput';
-import { Autocomplete as BaseAutocomplete } from '@material-ui/lab';
+import { Autocomplete } from '@material-ui/lab';
 
 import axios from 'axios';
 
-const Autocomplete = (props) => {
+const AsyncAutocomplete = (props) => {
   const [options, setOptions] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const fetchFromAPI = async (searchedValue) => {
     const response = await axios.get(
-      `https://bdt-backend.herokuapp.com/api/v0/users/?search=${searchedValue}`
+      `${Endpoints.users}${searchedValue}`
     );
     return response.data;
   };
 
   return (
-    <BaseAutocomplete
+    <Autocomplete
       options={options}
       autoComplete
       value={props.value}
@@ -56,4 +58,4 @@ Autocomplete.propTypes = {
   placeholder: PropTypes.string.isRequired
 };
 
-export default Autocomplete;
+export default AsyncAutocomplete;

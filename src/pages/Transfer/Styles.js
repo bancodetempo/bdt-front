@@ -40,7 +40,7 @@ export const CardOrder = withStyles({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    marginTop: '2%'
+    margin: '1% auto'
   }
 })(Card);
 
@@ -59,7 +59,7 @@ export const OrderTitle = withStyles({
     lineHeight: '42px',
     color: '#19B7E6',
     textAlign: 'center',
-    margin: '2% 0 1% 0'
+    margin: '2.5% 0 1% 0'
   }
 })(Typography);
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import 'index.css';
 import Router from 'components/Router';
-import Header from 'components/Header';
-import Footer from 'components/Footer';
+import Header from 'components/Header/index';
+import Footer from 'components/Footer/index';
 import styled from 'styled-components';
 import BackgroundImage from 'img/background.png';
 
