@@ -7,6 +7,9 @@ import { Endpoints } from 'Endpoints';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CardActions from '@material-ui/core/CardActions';
 
+import Autocomplete from 'components/Autocomplete/AsyncAutocomplete';
+import InputOrder from 'components/Input/index';
+
 import {
   OrderSubtitle,
   OrderTitle,
@@ -22,7 +25,7 @@ import Arrow from 'img/arrow.png';
 
 import useForm from 'hooks/Form';
 
-import OrderSection from 'components/OrderSection/index'
+import OrderSection from 'components/OrderSection/index';
 
 const Transfer = (props) => {
   const { form, onChange, resetForm } = useForm({
@@ -62,7 +65,7 @@ const Transfer = (props) => {
   return (
     <ThemeProvider theme={Theme}>
       <CardOrder>
-        
+
         <OrderContent>
           <OrderTitle
             color="textSecondary"
@@ -77,27 +80,33 @@ const Transfer = (props) => {
           <form onSubmit={submitForm}>
             <section className="container-input">
               <OrderSection
-                inputType={"autocomplete"}
-                title={"De"}
-                text={"pediu"}
-                value={form.requester}
-                onChange={(event, value) => {
-                  onChange("requester", value);
-                }}
-                placeholder={"Nome do requisitante"}
+                title={'De'}
+                text={<p>Insira o nome de quem <b>pediu</b> o serviço</p>}
+                slot={
+                  <Autocomplete
+                    value={form.requester}
+                    onChange={(event, value) => {
+                      onChange('requester', value);
+                    }}
+                    placeholder={'Nome do requisitante'}
+                  />
+                }
               />
-              
+
               <img id="arrow" src={Arrow} alt="Arrow icon" />
-             
+
               <OrderSection
-                inputType={"autocomplete"}
-                title={"Para"}
-                text={"realizou"}
-                value={form.grantor}
-                onChange={(event, value) => {
-                  onChange("grantor", value);
-                }}
-                placeholder={"Nome do concedente"}
+                title={'Para'}
+                text={<p>Insira o nome de quem <b>realizou</b> o serviço</p>}
+                slot={
+                  <Autocomplete
+                    value={form.grantor}
+                    onChange={(event, value) => {
+                      onChange('grantor', value);
+                    }}
+                    placeholder={'Nome do concedente'}
+                  />
+                }
               />
             </section>
 
@@ -105,36 +114,42 @@ const Transfer = (props) => {
 
             <section className="container-input">
               <OrderSection
-                inputType={"normal"}
                 image={Clock}
-                title={"Horas"}
-                text={"Quantas horas em divisão de 0,5"}
-                type={"number"}
-                placeholder={"0.0"}
-                name={"orderPrice"}
-                onChange={handleChange}
-                value={form.orderPrice}
+                title={'Horas'}
+                text={'Quantas horas em divisão de 0,5'}
+                slot={
+                  <InputOrder
+                    type={'number'}
+                    placeholder={'0.0'}
+                    name={'orderPrice'}
+                    onChange={handleChange}
+                    value={form.orderPrice}
+                  />
+                }
               />
               <OrderSection
-                inputType={"normal"}
                 image={Swap}
-                title={"O que foi trocado"}
-                text={"Que serviço, produto ou ajuda"}
-                placeholder={"Descrição"}
-                name={"description"}
-                onChange={handleChange}
-                value={form.description}
+                title={'O que foi trocado'}
+                text={'Que serviço, produto ou ajuda'}
+                slot={
+                  <InputOrder
+                    placeholder={'Descrição'}
+                    name={'description'}
+                    onChange={handleChange}
+                    value={form.description}
+                  />
+                }
               />
             </section>
           </form>
         </OrderContent>
-        
+
         <CardActions>
           <Button onClick={handleSubmit}>
             SOLICITAR
           </Button>
         </CardActions>
-      
+
       </CardOrder>
     </ThemeProvider>
   );
