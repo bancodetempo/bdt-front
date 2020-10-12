@@ -1,0 +1,41 @@
+hr{
+    border: 0.5px solid #c4c4c4;
+    height: 0;
+    margin: 3% 0;
+}
+
+.container-input{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4%;
+}
+
+#title-form, #subtitle-form{
+    text-align: center;
+}
+
+#title-form{
+    font-family: IBM Plex Sans;
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 42px;
+    color: #19B7E6;
+    margin: 4vh 0 1vh 0;
+}
+
+#subtitle-form{
+    margin-bottom: 5vh;
+    font-family: Roboto;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    color: #4F4F4F;
+}
+
+#arrow{
+    width: 4.2vw;
+    height: 4.2vw;
+    margin: 0 4%;
+}

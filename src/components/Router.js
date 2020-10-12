@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
-import Transfer from 'pages/Transfer';
+import Transfer from 'pages/Transfer/index';
 
 const routes = [
   {

@@ -1,5 +1,5 @@
 import React from 'react';
-import './Components.css';
+import './index.css';
 import HourGlass from 'img/hourglass.png';
 
 const Header = () =>

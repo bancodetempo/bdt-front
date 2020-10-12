@@ -1,0 +1,20 @@
+.title{
+  padding: 2vh 0 0 2vw;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.title >img{
+  width: 2vw;
+  height: 3.4vh;
+}
+
+.title >p{
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 23px;
+  margin: 0;
+  color: #233648;
+}
