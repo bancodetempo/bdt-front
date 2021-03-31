@@ -15,9 +15,9 @@ const Header = () => {
       </section>
 
       <section>
-        <TabNavigation page={'/'} isActive={tabActive} title={'Transação de Horas'} />
-        <TabNavigation page={'/saldo'} isActive={false} title={'Verificar Meu Saldo'} />
-        <TabNavigation page={'/extrato'} isActive={false} title={'Extrato'} />
+        <TabNavigation page={''} isActive={tabActive} title={'Transação de Horas'} />
+        <TabNavigation page={'saldo'} isActive={false} title={'Verificar Meu Saldo'} />
+        <TabNavigation page={'extrato'} isActive={false} title={'Extrato'} />
       </section>
     </div>
   );
