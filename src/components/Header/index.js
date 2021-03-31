@@ -5,7 +5,7 @@ import Hourglass from '../../img/hourglass.png';
 import Logo from '../../img/logo.png';
 
 const Header = () => {
-  const [tabActive, setTabActive] = useState(true);
+  const [tabActive] = useState(true);
 
   return (
     <div className="header">
@@ -20,7 +20,7 @@ const Header = () => {
         <TabNavigation page={'/extrato'} isActive={false} title={'Extrato'} />
       </section>
     </div>
-  )
-}
+  );
+};
 
 export default Header;
