@@ -1,6 +1,6 @@
 import React from 'react';
 import 'index.css';
-import Router from 'components/Router';
+import Router from './components/Router';
 import Header from 'components/Header/index';
 import Footer from 'components/Footer/index';
 import styled from 'styled-components';
@@ -11,20 +11,25 @@ const WholeScreen = styled.section`
   height: 100vh;
   overflow: hidden;
 `;
-const Container = styled.section`
+
+const Main = styled.section`
   background-image: url("${BackgroundImage}");
-  background-color: #000000;
-  background-size: cover;
+  background-color: #8FDFF4;
+  background-position: center;
   background-repeat: no-repeat;
-  height: 88%;
+  background-size: 100% 100%;
+  height: 81%;
+  display: flex;
+  align-items: center;
 `;
+
 const App = () => {
   return (
     <WholeScreen>
-      <Container>
-        <Header />
+      <Header />
+      <Main>
         <Router />
-      </Container>
+      </Main>
       <Footer />
     </WholeScreen>
   );

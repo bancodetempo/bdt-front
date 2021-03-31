@@ -1,0 +1,12 @@
+.tabContainer {
+    height:100%;
+    cursor: pointer;
+    padding-bottom: 1%;
+}
+
+.tabContainer p {
+    color: var(--gray-dark);
+    font-size: 1.2rem;
+    margin: 0;
+    height: 100%;
+}
