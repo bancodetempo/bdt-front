@@ -1,21 +1,9 @@
-import { withStyles, createMuiTheme } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 
 import TextField from '@material-ui/core/TextField';
-import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import ButtonM from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-
-export const Theme = createMuiTheme({
-  palette: {
-    primary: {
-      light: '#037fff',
-      contrastText: '#fff',
-      main: '#8FDFF4',
-      dark: '#10121b'
-    }
-  }
-});
 
 export const Input = withStyles({
   root: {
@@ -32,17 +20,6 @@ export const Input = withStyles({
     }
   }
 })(TextField);
-
-export const CardOrder = withStyles({
-  root: {
-    width: '54vw',
-    height: '75vh',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    margin: '1% auto'
-  }
-})(Card);
 
 export const OrderContent = withStyles({
   root: {

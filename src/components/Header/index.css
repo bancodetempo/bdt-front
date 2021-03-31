@@ -1,20 +1,39 @@
-.title{
-  padding: 2vh 0 0 2vw;
+.header{
+  padding: 0 2vw;
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
+  justify-content: space-between;
+  height: 8.5%;
 }
 
-.title >img{
-  width: 2vw;
-  height: 3.4vh;
+.header img {
+  height: 6vh;
 }
 
-.title >p{
+.header img:last-of-type {
+  height: 5vh;
+}
+
+.header >p{
   font-style: normal;
   font-weight: bold;
   font-size: 20px;
   line-height: 23px;
   margin: 0;
   color: #233648;
+}
+
+.header >section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header >section:last-child {
+  width: 38%;
+}
+
+.header >section:first-child {
+  width: 14%;
 }
