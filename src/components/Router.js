@@ -1,11 +1,16 @@
 import React from 'react';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import Transfer from 'pages/Transfer/index';
+import Extract from 'pages/Extract';
 
 const routes = [
   {
     path: '/',
     component: <Transfer />
+  },
+  {
+    path: '/extrato',
+    component: <Extract />
   }
 ];
 
