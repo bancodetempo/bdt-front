@@ -2,37 +2,38 @@ import React, { useEffect, useState } from 'react';
 import './index.css';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router';
+import { useSelector } from 'react-redux';
 
 const TabNavigation = (props) => {
+  const history = useHistory();
+  const page = useSelector(state => state.currentPage);
   const [borderType, setBorderType] = useState('none');
   const [fontType, setFontType] = useState(700);
-  const history = useHistory();
 
   const goToPage = (page) => {
-    history.push(`/${page}`);
+    history.push(page);
   };
 
   useEffect(() => {
-    if (props.isActive) {
+    if (page === props.path) {
       setBorderType('5px solid #E61B76');
       setFontType(900);
     } else {
       setBorderType('none');
       setFontType(700);
     }
-  }, [props.isActive]);
+  }, [page, props.path]);
 
   return (
-    <section onClick={() => goToPage(props.page)} className="tabContainer" style={{ borderBottom: borderType }}>
+    <section onClick={() => goToPage(props.path)} className="tabContainer" style={{ borderBottom: borderType }}>
       <p style={{ fontWeight: fontType }}>{props.title}</p>
     </section>
   );
 };
 
 TabNavigation.propTypes = {
-  isActive: PropTypes.bool.isRequired,
   title: PropTypes.string.isRequired,
-  page: PropTypes.string.isRequired
+  path: PropTypes.string.isRequired
 };
 
 export default TabNavigation;

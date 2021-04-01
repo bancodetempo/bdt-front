@@ -1,8 +1,10 @@
 import React from 'react';
 import 'index.css';
+
+import { Provider } from 'react-redux';
+import store from './store';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Router from './components/Router';
-import styled from 'styled-components';
 
 export const Theme = createMuiTheme({
   palette: {
@@ -15,19 +17,15 @@ export const Theme = createMuiTheme({
   }
 });
 
-const WholeScreen = styled.section`
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-`;
-
 const App = () => {
   return (
-    <ThemeProvider theme={Theme}>
-      <WholeScreen>
-        <Router />
-      </WholeScreen>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={Theme}>
+        <div className='app'>
+          <Router />
+        </div>
+      </ThemeProvider>
+    </Provider>
   );
 };
 

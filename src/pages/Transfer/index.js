@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './index.css';
 import axios from 'axios';
 import { Endpoints } from 'Endpoints';
@@ -18,16 +18,23 @@ import Swap from 'img/repeat.svg';
 import Arrow from 'img/arrow.png';
 
 import useForm from 'hooks/Form';
-
+import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router';
 import OrderSection from 'components/OrderSection/index';
 
 const Transfer = (props) => {
+  const location = useLocation();
+  const dispatch = useDispatch();
   const { form, onChange, resetForm } = useForm({
     requester: '',
     grantor: '',
     orderPrice: '',
     description: ''
   });
+
+  useEffect(() => {
+    dispatch({ type: 'SET_CURRENT_PAGE', payload: location.pathname });
+  }, [location, dispatch]);
 
   const submitForm = (event) => {
     event.preventDefault();
