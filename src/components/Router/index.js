@@ -1,11 +1,13 @@
 import React from 'react';
-import { ThemeProvider } from '@material-ui/core/styles';
+
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import Transfer from 'pages/Transfer/index';
 import Extract from 'pages/Extract';
+import Header from 'components/Header/index';
+import Footer from 'components/Footer/index';
 import {
   CardOrder,
-  Theme
+  Main
 } from './Styles';
 
 const routes = [
@@ -20,9 +22,10 @@ const routes = [
 ];
 
 const Routes = () => {
-  return <ThemeProvider theme={Theme}>
-    <CardOrder>
-      <BrowserRouter>
+  return <BrowserRouter>
+    <Header />
+    <Main>
+      <CardOrder>
         <Switch>
           {
             routes.map(
@@ -34,9 +37,10 @@ const Routes = () => {
             )
           }
         </Switch>
-      </BrowserRouter>
-    </CardOrder>
-  </ThemeProvider>;
+      </CardOrder>
+    </Main>
+    <Footer />
+  </BrowserRouter>;
 };
 
 export default Routes;

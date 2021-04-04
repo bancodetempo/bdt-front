@@ -1,37 +1,31 @@
 import React from 'react';
 import 'index.css';
+
+import { Provider } from 'react-redux';
+import store from './store';
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Router from './components/Router';
-import Header from 'components/Header/index';
-import Footer from 'components/Footer/index';
-import styled from 'styled-components';
-import BackgroundImage from 'img/background.png';
 
-const WholeScreen = styled.section`
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-`;
-
-const Main = styled.section`
-  background-image: url("${BackgroundImage}");
-  background-color: #8FDFF4;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  height: 81%;
-  display: flex;
-  align-items: center;
-`;
+export const Theme = createMuiTheme({
+  palette: {
+    primary: {
+      light: '#037fff',
+      contrastText: '#fff',
+      main: '#8FDFF4',
+      dark: '#10121b'
+    }
+  }
+});
 
 const App = () => {
   return (
-    <WholeScreen>
-      <Header />
-      <Main>
-        <Router />
-      </Main>
-      <Footer />
-    </WholeScreen>
+    <Provider store={store}>
+      <ThemeProvider theme={Theme}>
+        <div className='app'>
+          <Router />
+        </div>
+      </ThemeProvider>
+    </Provider>
   );
 };
 

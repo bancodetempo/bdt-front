@@ -52,7 +52,7 @@ const AsyncAutocomplete = (props) => {
   );
 };
 
-Autocomplete.propTypes = {
+AsyncAutocomplete.propTypes = {
   value: PropTypes.object,
   onChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string.isRequired
