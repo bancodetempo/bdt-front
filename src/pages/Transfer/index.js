@@ -28,7 +28,7 @@ const Transfer = (props) => {
   const { form, onChange, resetForm } = useForm({
     requester: '',
     grantor: '',
-    orderPrice: '',
+    hours: '',
     description: ''
   });
 
@@ -47,9 +47,9 @@ const Transfer = (props) => {
 
   const handleSubmit = async () => {
     const body = {
-      requester: form.requester.id,
-      grantor: form.grantor.id,
-      order_price: form.orderPrice,
+      source_account_id: form.requester.account.id,
+      destination_account_id: form.grantor.account.id,
+      amount: form.hours * 60 * 60,
       description: form.description
     };
     axios
@@ -120,9 +120,9 @@ const Transfer = (props) => {
                 <InputOrder
                   type={'number'}
                   placeholder={'0.0'}
-                  name={'orderPrice'}
+                  name={'hours'}
                   onChange={handleChange}
-                  value={form.orderPrice}
+                  value={form.hours}
                 />
               }
             />
