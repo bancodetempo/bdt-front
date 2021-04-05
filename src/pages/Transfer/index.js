@@ -40,9 +40,9 @@ const Transfer = (props) => {
 
   const handleSubmit = async () => {
     const body = {
-      requester: form.requester.id,
-      grantor: form.grantor.id,
-      order_price: form.orderPrice,
+      source_account_id: form.requester.account.id,
+      destination_account_id: form.grantor.account.id,
+      amount: form.orderPrice,
       description: form.description
     };
     axios
