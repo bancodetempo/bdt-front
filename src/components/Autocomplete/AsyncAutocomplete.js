@@ -15,7 +15,7 @@ const AsyncAutocomplete = (props) => {
 
   const fetchFromAPI = async (searchedValue) => {
     const response = await axios.get(
-      `${Endpoints.users}${searchedValue}`
+      `${Endpoints.users}/?search_field=${searchedValue}`
     );
     return response.data;
   };
@@ -28,7 +28,7 @@ const AsyncAutocomplete = (props) => {
       disableClearable={true}
       onChange={props.onChange}
       getOptionLabel={(option) => {
-        return option ? `${option.first_name} ${option.last_name}` : '';
+        return option ? `${option.name}` : '';
       }}
       getOptionSelected={(option, value) => {
         return option.id === value.id;
