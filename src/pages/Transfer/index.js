@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import './index.css';
 import axios from 'axios';
-import { Endpoints } from 'Endpoints';
+import { Endpoints } from 'utils/Endpoints';
 import CardActions from '@material-ui/core/CardActions';
 import Autocomplete from 'components/Autocomplete/AsyncAutocomplete';
 import InputOrder from 'components/Input/index';
