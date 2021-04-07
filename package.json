@@ -12,6 +12,7 @@
     "@types/axios": "^0.14.0",
     "autosuggest-highlight": "^3.1.1",
     "axios": "^0.19.2",
+    "caniuse-lite": "^1.0.30001207",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jest": "^23.20.0",

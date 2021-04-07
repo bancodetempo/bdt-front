@@ -1,41 +1,30 @@
 import React, { useState, useEffect } from 'react';
+import './index.css';
 import axios from 'axios';
 
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
+import Pagination from '@material-ui/lab/Pagination';
 
+import InputOrder from 'components/Input/index';
+import * as St from './Styles';
 import { Endpoints } from 'utils/Endpoints';
 import * as Fn from 'utils/functions';
 
-const useStyles = makeStyles({
-  root: {
-    width: '100%',
-    height: '100%'
-  },
-  container: {
-    maxHeight: '65%'
-  }
-});
-
 const StickyHeadTable = () => {
-  const classes = useStyles();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [statements, setStatements] = useState([]);
   const [rows, setRows] = useState([]);
+  const [pagesNumber, setPagesNumber] = useState(1);
 
   useEffect(() => {
     getStatements();
   }, [rowsPerPage, page]);
 
-  const getStatements = async () => {
+  const getStatements = () => {
     axios
       .get(`${Endpoints.statements}/?page=${page + 1}&per_page=${rowsPerPage}`)
       .then((res) => {
@@ -44,6 +33,7 @@ const StickyHeadTable = () => {
           return createData(stm.source_user.name, stm.destination_user.name, stm.description, stm.amount, stm.inserted_at, 3);
         });
         setRows(extract);
+        setPagesNumber(Math.ceil(res.data.count / rowsPerPage));
       })
       .catch((err) => {
         console.log(err);
@@ -51,7 +41,17 @@ const StickyHeadTable = () => {
   };
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+    setPage(newPage - 1);
+  };
+
+  const handleChoicePage = (event) => {
+    const newPage = event.target.value;
+
+    if (newPage <= pagesNumber) {
+      setPage(newPage - 1);
+    } else {
+      setPage(page);
+    }
   };
 
   const handleChangeRowsPerPage = (event) => {
@@ -60,44 +60,51 @@ const StickyHeadTable = () => {
   };
 
   const columns = [
-    { id: 'source', label: 'De', columnWidth: '22%' },
-    { id: 'destination', label: 'Para', columnWidth: '22%' },
+    { id: 'source', label: 'De', columnWidth: '21.5%' },
+    { id: 'destination', label: 'Para', columnWidth: '21.5%' },
     {
       id: 'description',
       label: 'O que',
-      columnWidth: '23.5%'
+      columnWidth: '23%'
     },
     {
-      id: 'hours',
+      id: 'stringHours',
       label: 'Tempo',
-      columnWidth: '7%',
+      columnWidth: '12%',
       align: 'center',
       format: (value) => value.toFixed(1)
     },
     {
       id: 'date',
       label: 'Data',
-      columnWidth: '23.5%'
+      columnWidth: '21%'
     },
     {
       id: 'id',
       label: 'ID',
-      columnWidth: '2%',
+      columnWidth: '1%',
       align: 'center'
     }
   ];
 
   const createData = (source, destination, description, seconds, initialDate, id) => {
+    let string = 'hora';
     const hours = Fn.secondToHours(seconds);
+
+    if (hours >= 2) {
+      string = 'horas';
+    }
+
+    const stringHours = `${hours} ${string}`;
     const date = Fn.formatDate(initialDate);
-    return { source, destination, description, hours, date, id };
+    return { source, destination, description, stringHours, date, id };
   };
 
   console.log(statements);
 
   return (
-    <Paper className={classes.root}>
-      <TableContainer className={classes.container}>
+    <St.Wrapper>
+      <St.Container>
         <Table
           stickyHeader
           aria-label="sticky table"
@@ -106,44 +113,62 @@ const StickyHeadTable = () => {
           <TableHead>
             <TableRow>
               {columns.map((column) => (
-                <TableCell
+                <St.Head
                   key={column.id}
                   align={column.align}
                   style={{ width: column.columnWidth }}
                 >
                   {column.label}
-                </TableCell>
+                </St.Head>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+            {rows.map((row) => {
               return (
-                <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                <St.Row tabIndex={-1} key={row.code}>
                   {columns.map((column) => {
                     const value = row[column.id];
                     return (
-                      <TableCell key={column.id} align={column.align}>
+                      <St.Cell key={column.id} align={column.align}>
                         {column.format && typeof value === 'number' ? column.format(value) : value}
-                      </TableCell>
+                      </St.Cell>
                     );
                   })}
-                </TableRow>
+                </St.Row>
               );
             })}
           </TableBody>
         </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 50, 100]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onChangePage={handleChangePage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
-      />
-    </Paper>
+      </St.Container>
+      <div className='table-pagination'>
+        <section>
+          <span>Linhas por página:&nbsp;</span>
+          <select value={rowsPerPage} onChange={handleChangeRowsPerPage}>
+            <option value='10'>10</option>
+            <option value='25'>25</option>
+            <option value='50'>50</option>
+            <option value='100'>100</option>
+          </select>
+        </section>
+
+        <section>
+          <Pagination count={pagesNumber} page={page + 1} onChange={handleChangePage} size="small" />
+        </section>
+
+        <section>
+          <span>Ir para a página: &nbsp;</span>
+          <InputOrder
+            type={'number'}
+            onChange={handleChoicePage}
+            value={page + 1}
+            width={'3vw'}
+            max={pagesNumber}
+            min={1}
+          />
+        </section>
+      </div>
+    </St.Wrapper>
   );
 };
 

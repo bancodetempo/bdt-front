@@ -6,6 +6,8 @@ import CardActions from '@material-ui/core/CardActions';
 import Autocomplete from 'components/Autocomplete/AsyncAutocomplete';
 import InputOrder from 'components/Input/index';
 
+import * as Fn from 'utils/functions';
+
 import {
   OrderSubtitle,
   OrderTitle,
@@ -49,7 +51,7 @@ const Transfer = (props) => {
     const body = {
       source_account_id: form.requester.account.id,
       destination_account_id: form.grantor.account.id,
-      amount: form.hours * 60 * 60,
+      amount: Fn.hoursToSeconds(form.hours),
       description: form.description
     };
     axios
@@ -123,6 +125,9 @@ const Transfer = (props) => {
                   name={'hours'}
                   onChange={handleChange}
                   value={form.hours}
+                  width={'22vw'}
+                  step={0.5}
+                  min={0}
                 />
               }
             />
@@ -136,6 +141,7 @@ const Transfer = (props) => {
                   name={'description'}
                   onChange={handleChange}
                   value={form.description}
+                  width={'22vw'}
                 />
               }
             />
