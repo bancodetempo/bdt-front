@@ -16,7 +16,7 @@ export const Main = styled.section`
 
 export const CardOrder = withStyles({
   root: {
-    width: '54vw',
+    width: '60vw',
     height: '75vh',
     display: 'flex',
     justifyContent: 'center',

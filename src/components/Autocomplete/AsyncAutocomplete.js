@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Endpoints } from 'Endpoints';
+import { Endpoints } from 'utils/Endpoints';
 
 import PropTypes from 'prop-types';
 
