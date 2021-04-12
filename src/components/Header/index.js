@@ -13,7 +13,7 @@ const Header = () => <div className="header">
 
   <section>
     <TabNavigation path={'/'} title={'Transação de Horas'} />
-    <TabNavigation path={'/saldo'} title={'Verificar Meu Saldo'} />
+    {/* <TabNavigation path={'/saldo'} title={'Verificar Meu Saldo'} /> */}
     <TabNavigation path={'/extrato'} title={'Extrato'} />
   </section>
 </div>;
