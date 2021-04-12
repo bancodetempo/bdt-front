@@ -1,0 +1,52 @@
+.extract{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 94%;
+}
+
+.header-extract{
+    padding: 0 2%;
+    width: 96%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr 1fr;
+    column-gap: 2%;
+}
+
+.header-extract >section:nth-of-type(2){
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: baseline;
+}
+
+.header-title {
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 42px;
+    color: #19B7E6;
+    margin: 3% 0 0 0;
+}
+
+.header-update p{
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #5A5A5A;
+    margin: 0  2% 0 0;
+}
+
+
+.header-subtitle{
+    font-size: 14px;
+    color: #333333;
+    margin: 0;
+}
+
+.header-update > section{
+    display: flex;
+    flex-wrap: nowrap;
+    cursor: pointer;
+    margin-right: 6%;
+}
