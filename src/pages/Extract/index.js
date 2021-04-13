@@ -45,8 +45,6 @@ const Extract = () => {
     setBalance(undefined);
   };
 
-  console.log('USUÁRIOO', user);
-
   return (
     <div className="extract">
       <header className="header-extract">

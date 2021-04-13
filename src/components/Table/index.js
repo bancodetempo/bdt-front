@@ -57,6 +57,10 @@ const StickyHeadTable = (props) => {
     getStatements();
   }, [getStatements]);
 
+  useEffect(() => {
+    setPage(0);
+  }, [props.user]);
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage - 1);
   };
