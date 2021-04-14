@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './index.css';
 import axios from 'axios';
 import { Endpoints } from 'utils/Endpoints';
@@ -24,7 +24,18 @@ import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router';
 import OrderSection from 'components/OrderSection/index';
 
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
+const Alert = (props) => {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+};
+
 const Transfer = (props) => {
+  const [openSucess, setOpenSucess] = useState(false);
+  const [openError, setOpenError] = useState(false);
+  const [sucessMessage, setSucessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const location = useLocation();
   const dispatch = useDispatch();
   const { form, onChange, resetForm } = useForm({
@@ -33,6 +44,14 @@ const Transfer = (props) => {
     hours: '',
     description: ''
   });
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenError(false);
+    setOpenSucess(false);
+  };
 
   useEffect(() => {
     dispatch({ type: 'SET_CURRENT_PAGE', payload: location.pathname });
@@ -48,21 +67,31 @@ const Transfer = (props) => {
   };
 
   const handleSubmit = async () => {
-    const body = {
-      source_account_id: form.requester.account.id,
-      destination_account_id: form.grantor.account.id,
-      amount: Fn.hoursToSeconds(form.hours),
-      description: form.description
-    };
-    axios
-      .post(Endpoints.orders, body)
-      .then((res) => {
-        console.log(res);
-        resetForm();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const source = form.requester.account.id;
+    const destination = form.grantor.account.id;
+
+    if (source === destination) {
+      return alert('O nome do Remetente e do Destinatário não podem ser iguais! Por favor escolha os nomes corretos');
+    } else {
+      const body = {
+        source_account_id: source,
+        destination_account_id: destination,
+        amount: Fn.hoursToSeconds(form.hours),
+        description: form.description
+      };
+      axios
+        .post(Endpoints.orders, body)
+        .then((res) => {
+          setSucessMessage('Transferência foi realizada com sucesso!');
+          setOpenSucess(true);
+          resetForm();
+        })
+        .catch((err) => {
+          console.log(err);
+          setErrorMessage('Algo deu errado. Por favor tente novamente');
+          setOpenError(true);
+        });
+    }
   };
 
   return (
@@ -154,6 +183,18 @@ const Transfer = (props) => {
           SOLICITAR
         </Button>
       </CardActions>
+
+      <Snackbar open={openSucess} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success">
+          {sucessMessage}
+        </Alert>
+      </Snackbar>
+
+      <Snackbar open={openError} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error">
+          {errorMessage}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };
